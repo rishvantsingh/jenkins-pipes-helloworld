@@ -18,7 +18,14 @@ node {
     stage('publish') {
       echo "uploading package..."
     }
-  } finally {
+  }
+  post {
+        always {
+            emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
+        }
+    }
+  
+  finally {
     stage('cleanup') {
       echo "doing some cleanup..."
     }
